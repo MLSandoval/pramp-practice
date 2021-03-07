@@ -43,21 +43,28 @@
 
   const assignEventHandlers = () => {
     let searchInput = document.querySelector(".search-input");
-    searchInput.addEventListener('input', ()=>{searchFilms(searchInput)});
-  }
-
-  const searchFilms = (inputEl) => {
-    
-    const filteredFilms = filmsArray.filter(film => {
-      return film.title.toLowerCase().includes(inputEl.value.toLowerCase());
-    });
-
-    appendFilteredFilms(filteredFilms);
-  }
-
-  const appendFilteredFilms = (films) => {
-    
     let resultsUL = document.querySelector(".results");
+
+    searchInput.addEventListener('input', ()=>{
+      searchFilms(searchInput, resultsUL);
+    });
+  }
+
+  const searchFilms = (inputEl, resultsUL) => {
+    if(inputEl.value === ''){
+      clearInnerHTML(resultsUL);
+    }else{
+      const filteredFilms = filmsArray.filter(film => {
+      return film.title.toLowerCase().includes(inputEl.value.toLowerCase());
+      });
+
+      appendFilteredFilms(filteredFilms, resultsUL);
+    }
+    
+    
+  }
+
+  const appendFilteredFilms = (films, resultsUL) => {
 
     clearInnerHTML(resultsUL);
 
@@ -68,8 +75,8 @@
     });
   }
 
-  const clearInnerHTML = (list) => {
-    list.innerHTML = '';
+  const clearInnerHTML = (element) => {
+    element.innerHTML = '';
   }
 </script>
 </body>
