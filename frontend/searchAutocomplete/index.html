@@ -44,9 +44,18 @@
   const assignEventHandlers = () => {
     let searchInput = document.querySelector(".search-input");
     let resultsUL = document.querySelector(".results");
+    let listItems = document.querySelectorAll(".result-item");
 
     searchInput.addEventListener('input', ()=>{
       searchFilms(searchInput, resultsUL);
+    });
+
+    resultsUL.addEventListener('mouseover', (e) => {
+      e.target.style.backgroundColor = "rgba(150, 150, 150, .5)";
+    });
+
+    resultsUL.addEventListener("mouseout", (e) => {
+      e.target.style.backgroundColor = "rgba(0, 0, 0, 0)";
     });
   }
 
@@ -55,13 +64,13 @@
       clearInnerHTML(resultsUL);
     }else{
       const filteredFilms = filmsArray.filter(film => {
-      return film.title.toLowerCase().includes(inputEl.value.toLowerCase());
-      });
+        //or to return items that just contain the search input
+        // return film.title.toLowerCase().includes(inputEl.value);
 
+        return (film.title.toLowerCase().slice(0, inputEl.value.length) === inputEl.value.toLowerCase());
+      });
       appendFilteredFilms(filteredFilms, resultsUL);
     }
-    
-    
   }
 
   const appendFilteredFilms = (films, resultsUL) => {
@@ -70,6 +79,7 @@
 
     films.forEach(film => {
       let li = document.createElement('li');
+      li.className = 'result-item';
       li.innerText = `"${film.title}" || ${film.rating}/10`; 
       resultsUL.append(li);
     });
