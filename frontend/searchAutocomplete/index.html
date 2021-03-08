@@ -22,72 +22,106 @@
     *   searchData("QUERY").then(results => ...)
     * ------------------------------*/
   
-  let filmsArray = [];
+  
   
   document.addEventListener("DOMContentLoaded", function(event) {
 
-    fetchFilmData();
-    assignEventHandlers();
+    // fetchFilmData();
+    // assignEventHandlers();
+
   });
 
-  const fetchFilmData = () => {
-    searchData('')
-      .then(res=>{
-        filmsArray = res;
-        console.log(filmsArray)
-      })
-      .catch(err =>{
-        console.errer(err);
-      });
+  const memoize = (func) => {
+    const cache = new Map();
+
+    return ((...args)=>{
+      const key = args[0];
+      if(cache.has(key)){
+        console.log("cache hit");
+        return cache.get(key);
+      }
+
+      console.log('cache miss');
+      const val = func.apply(this, arguments);
+      cache.set(key, val);
+      return val;
+    })
   }
 
-  const assignEventHandlers = () => {
-    let searchInput = document.querySelector(".search-input");
-    let resultsUL = document.querySelector(".results");
-    let listItems = document.querySelectorAll(".result-item");
+  const rateLimit = (func, time) => {
+    let timeout;
 
-    searchInput.addEventListener('input', ()=>{
-      searchFilms(searchInput, resultsUL);
-    });
+    return (() => {
+      const funcCall = () => {
+        console.log("calling");
+        return func.apply(this, arguments)
+      }
 
-    resultsUL.addEventListener('mouseover', (e) => {
-      e.target.style.backgroundColor = "rgba(150, 150, 150, .5)";
-    });
-
-    resultsUL.addEventListener("mouseout", (e) => {
-      e.target.style.backgroundColor = "rgba(0, 0, 0, 0)";
-    });
+      clearTimeout
+    })
   }
 
-  const searchFilms = (inputEl, resultsUL) => {
-    if(inputEl.value === ''){
-      clearInnerHTML(resultsUL);
-    }else{
-      const filteredFilms = filmsArray.filter(film => {
-        //or to return items that just contain the search input
-        // return film.title.toLowerCase().includes(inputEl.value);
+  // let filmsArray = [];
+  // const fetchFilmData = () => {
+  //   searchData('')
+  //     .then(res=>{
+  //       filmsArray = res;
+  //       console.log(filmsArray)
+  //     })
+  //     .catch(err =>{
+  //       console.errer(err);
+  //     });
+  // }
 
-        return (film.title.toLowerCase().slice(0, inputEl.value.length) === inputEl.value.toLowerCase());
-      });
-      appendFilteredFilms(filteredFilms, resultsUL);
-    }
-  }
+  // const assignEventHandlers = () => {
+  //   let searchInput = document.querySelector(".search-input");
+  //   let resultsUL = document.querySelector(".results");
+  //   let listItems = document.querySelectorAll(".result-item");
 
-  const appendFilteredFilms = (films, resultsUL) => {
+  //   searchInput.addEventListener('input', ()=>{
+  //     searchFilms(searchInput, resultsUL);
+  //   });
 
-    clearInnerHTML(resultsUL);
+  //   resultsUL.addEventListener('mouseover', (e) => {
+  //     e.target.style.backgroundColor = "rgba(150, 150, 150, .5)";
+  //   });
 
-    films.forEach(film => {
-      let li = document.createElement('li');
-      li.className = 'result-item';
-      li.innerText = `"${film.title}" || ${film.rating}/10`; 
-      resultsUL.append(li);
-    });
-  }
+  //   resultsUL.addEventListener("mouseout", (e) => {
+  //     e.target.style.backgroundColor = "rgba(0, 0, 0, 0)";
+  //   });
+  // }
 
-  const clearInnerHTML = (element) => {
-    element.innerHTML = '';
-  }
+  // const searchFilms = (inputEl, resultsUL) => {
+  //   if(inputEl.value === ''){
+  //     clearInnerHTML(resultsUL);
+  //   }else{
+  //     const filteredFilms = filmsArray.filter(film => {
+  //       //or to return items that just contain the search input
+  //       // return film.title.toLowerCase().includes(inputEl.value);
+
+  //       return (film.title.toLowerCase().slice(0, inputEl.value.length) === inputEl.value.toLowerCase());
+  //     });
+  //     appendFilteredFilms(filteredFilms, resultsUL);
+  //   }
+  // }
+
+  // const appendFilteredFilms = (films, resultsUL) => {
+
+  //   clearInnerHTML(resultsUL);
+
+  //   films.forEach(film => {
+  //     let li = document.createElement('li');
+  //     li.className = 'result-item';
+  //     li.innerText = `"${film.title}" || ${film.rating}/10`; 
+  //     resultsUL.append(li);
+  //   });
+  // }
+
+  // const clearInnerHTML = (element) => {
+  //   element.innerHTML = '';
+  // }
+
+  
 </script>
 </body>
 </html>

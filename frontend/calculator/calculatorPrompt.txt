@@ -1,0 +1,24 @@
+Build a web calculator, that supports the basic operations of add, remove, multiply and divide.
+
+In addition, support resetting the current state, as well as a decimal point button.
+
+When you feel ready, you can validate your solution using any collaborative HTML/CSS renderer, such as this one.
+
+Hints & Tips
+Make sure your peers focuses first on functionality and layout, then optionally if time permits, on visual design
+To make the best use of the time, suggest they first implement “add” end-to-end using HTML elements, and then expand
+Suggest that your peer first try to think of ways the user might “break” the calculator, to not allow invalid inputs, e.g. 
+“what happens if I click a number when the last digit is already a number? what about operations?”
+
+Solution
+
+Here’s a working web calculator for reference.
+https://codepen.io/prampcontent/pen/jvNyKR
+
+A few points to notice:
+
+numbers and operators are (for the most part) ignored if invalid given the current state of the input
+the logic for applying an operator is reused across all operators, except for the actual function to execute
+the order in which the operators are defined is also the order in which they’ll be executed, which makes it significant
+the styling mimics a common calculator design, yet even without it the calculator is fully functional
+[Pra]ctice [m]akes [P]erfect!
