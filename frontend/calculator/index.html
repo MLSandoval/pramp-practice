@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculator</title>
+    <style>
+      .calc-container{
+        position:absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        height: 600px;
+        width: 400px;
+        background-color: rgba(192, 192, 192, 0.616);
+        flex-direction: column;
+        
+        flex-wrap: wrap;
+        justify-content: space-around;
+      }
+
+      .display{
+        text-align: right;
+        height: 15%;
+        width: calc(100% - 2px);
+        border: 1px solid black;
+        padding: 0px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+      }
+
+      .btn-row{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+      }
+
+      .btn-sm {
+        height: 50px;
+        width: 50px;
+        border-radius: 3px;
+      }
+
+
+
+    </style>
+</head>
+<body>
+<div class="calculator">
+    <!----------------------
+    Add your markup here
+    ------------------------>
+  <div>
+    <div class="calc-container">
+      <div type="text" class="display" id="display">
+        <p class="display-text">0</p>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="add-btn btn-sm" data-val="+" data-type="op" id="add-btn">+</button>
+        <button type="button" class="sub-btn btn-sm" data-val="-" data-type="op" id="sub-btn">-</button>
+        <button type="button" class="mult-btn btn-sm" data-val="*" data-type="op" id="mult-btn">*</button>
+        <button type="button" class="div-btn btn-sm" data-val="/" data-type="op" id="div-btn">/</button>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn-sm" data-val="7" data-type="number">7</button>
+        <button type="button" class="btn-sm" data-val="8" data-type="number">8</button>
+        <button type="button" class="btn-sm" data-val="9" data-type="number">9</button>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn-sm" data-val="4" data-type="number">4</button>
+        <button type="button" class="btn-sm" data-val="5" data-type="number">5</button>
+        <button type="button" class="btn-sm" data-val="6" data-type="number">6</button>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn-sm" data-val="1" data-type="number">1</button>
+        <button type="button" class="btn-sm" data-val="2" data-type="number">2</button>
+        <button type="button" class="btn-sm" data-val="3" data-type="number">3</button>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn-sm" data-val="." data-type="decimal">.</button>
+        <button type="button" class="btn-sm" data-val="0" data-type="number">0</button>
+        <button type="button" class="btn-sm" data-val="=" data-type="equals">=</button>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<script>
+  
+  
+  
+  document.addEventListener("DOMContentLoaded", ()=>{
+    addEventListeners();
+  });
+
+  let firstArg = null;
+  let secondArg = null;
+  let operator = null;
+  let equals = null;
+  let decimal = null;
+  const display = document.querySelector("#display");
+  console.log("firstArg: ", firstArg);
+
+  const addEventListeners = () => {
+    const input = document.querySelector("#display");
+    const btns = document.querySelectorAll(".btn-sm");
+
+    btns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        let input = e.target.getAttribute('data-val');
+        let type = e.target.getAttribute('data-type');
+        console.log("input: ", input);
+        
+        if(type === "number" && operator === null){
+          setFirstArg(input);
+        }else if(type === "number" && operator){
+          setSecondArg(input);
+        }else if(type === "op"){
+          clearDisplay();
+          setOperator(input);
+        }else if(type === "number" && operator){
+        }else if(type === "equals" && operator && secondArg){
+          setDisplay(calculate(firstArg, secondArg, operator));
+          
+        }else if(type === "decimal"){
+          setDecimal();
+        }
+
+        
+      });
+    })
+  }
+
+  const setDisplay = (value) => {
+    display.textContent = value;
+  }
+
+  const setFirstArg = (input => {
+    if(firstArg === null){
+      firstArg = input;
+    }else if(typeof firstArg === "string"){
+      firstArg += input;
+    }
+    setDisplay(firstArg);
+  });
+
+  const setSecondArg = (input => {
+    if(secondArg === null){
+      secondArg = input;
+    }else if(typeof secondArg === "string"){
+      secondArg += input;
+    }
+    setDisplay(secondArg);
+  });
+  
+  const setOperator = (input) => {
+    clearDisplay();
+    if(!operator){
+      operator = input;
+    }else if(firstArg && secondArg && operator){
+      firstArg = calculate(firstArg, secondArg, operator);
+      setDisplay(firstArg);
+      secondArg = null;
+      operator = null;
+
+    }
+  } 
+  
+  const setDecimal = () => {
+    if(firstArg === null){
+      firstArg = "0.";
+      setDisplay(firstArg);
+    }else if(firstArg && secondArg === null){
+      secondArg = "0."
+      setDisplay(secondArg);
+    }else if(firstArg && secondArg === null){
+      firstArg += ".";
+      setDisplay(firstArg);
+    }else if(firstArg && secondArg){
+      secondArgs += "."
+      setDisplay(secondArg);
+    }
+  }
+  
+  const calculate = (first, second, op) => {
+    first = parseFloat(first);
+    second = parseFloat(second);
+
+    switch(op){
+      case "+": 
+        return (first + second).toFixed(4);
+        break;
+      case "-": 
+        return (first - second).toFixed(4);
+        break;
+      case "*":
+        return (first * second).toFixed(4);
+        break;
+      case "/":
+        return (first / second).toFixed(4);
+        break;
+      default:
+        console.error("operation error");
+    }
+
+  }
+
+  const clearDisplay = () => {
+    display.text = "";
+  }
+    
+</script>
+
+</body>
+</html>
+<!----------------------
+  - add input element
+  - read input element
+  - make object for state
+  - create methods for arithmetic, reset state, decimal button
+  - UI for calculator
+    ------------------------>
