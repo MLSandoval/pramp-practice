@@ -23,22 +23,42 @@
 // let y = [0,1] //2
 // let z = [0,1,2,4] //3
 
-function getDifferentNumber (arr){
-  const map = new Map();
-  console.log("arr: ", arr);
-  arr.forEach((el, ind) => {
-    map.set(el, el);
-  })
+// function getDifferentNumber (arr){
+//   const map = new Map();
+//   console.log("arr: ", arr);
+//   arr.forEach((el, ind) => {
+//     map.set(el, el);
+//   })
 
-  for (let i = 0;i < map.size; i++){
-    if(i !== map.get(i)){
+//   for (let i = 0;i < map.size; i++){
+//     if(i !== map.get(i)){
+//       return i;
+//     }else if(i + 1 === map.size){
+//       return map.size;
+//     }
+//   }
+//   return null
+// }
+
+function getDifferentNumber(arr){
+  let map = new Map();
+  
+  arr.forEach((int, ind) => {
+    console.log()
+    map.set(ind, int)
+  });
+
+  for(let i = 0; i < map.size; i++){
+    let val = map.get(i);
+
+    if(val !==  i){
       return i;
-    }else if(i + 1 === map.size){
-      return map.size;
     }
   }
-  return null
+
+  return map.size;
 }
+
 
 let v = [0,1,2,3,4,5,6] //7
 let w = [0,1,2,3,5] // 4
