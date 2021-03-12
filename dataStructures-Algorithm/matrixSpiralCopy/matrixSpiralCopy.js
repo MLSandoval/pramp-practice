@@ -3,31 +3,32 @@ function spiralCopy(inputMatrix) {
   /*
   i: 2d array
   o: spiral 1d version array
-  c: intput length >=1, <= 100
+  c: input length >=1, <= 100
+ 
+
+
+  if in: [[1,2,3,4,5],[6,7,8,9,10],[11,12,13,14,15],[16,17,18,19,20]]
+  then out: [1,2,3,4,5,10,15,20,19,18,17,16,11,6,7,8,9,14,13,12]
+  coordinate form:
+    [(0, 0),(0, 1),(0, 2),(0, 3),(0, 4),(1,4),(2, 4),(3, 4),(3, 3),(3, 2),(3, 1),(3, 0),(2, 0),(1,0),(1, 1),(1, 2),(1,3),(2, 3),(2, 2),(2, 1),]
+
+    [
+      (0, 0),(0, 1),(0, 2),(0, 3),(0, 4),TURN
+      (1,4),(2, 4),(3, 4),TURN
+      (3, 3),(3, 2),(3, 1),(3, 0),TURN
+      (2, 0),(1,0),TURN
+      (1, 1),(1, 2),(1,3),TURN
+      (2, 3),(2, 2),(2, 1)END
+    ]
   */
   
-  top left corner -> top right corner, (0,0) - (0, 3), assign coordinates of last value to      pointer: 4
-  
-  top right corner -> bottom right corner, 'length.first inner  - 1' - length.outer
-  bottom right corner -> bottom left corner, length.outer -1, length.inner -1
-  bottom left -> top left -1, (3,0) , (1,0)
-  
-  let output = [];
-  
-  let columnPointer = 0;
-  let rowPointer = 0;
-  
-  while(columnPointer < inputMatrix.length){
-    
-  }
-  
-  for(let i = 0; i < inputMatrix[0].length; i++){
-    let val = inputMatrix[0][i];
-    output.push(val);
-  } //[1,2,3,4,5]
-  
-  
-  
-  
+    //through all subarrays + elements, maybe map the value as a key to a map, with map value at key = array holding coordinates of where it should be 
   
 }
+
+let matrix = [[1,    2,   3,  4,    5],
+              [6,    7,   8,  9,   10],
+              [11,  12,  13,  14,  15],
+              [16,  17,  18,  19,  20] ]
+
+console.log(spiralCopy(matrix))
