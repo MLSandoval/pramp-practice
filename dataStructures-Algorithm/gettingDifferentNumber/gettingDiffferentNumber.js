@@ -42,6 +42,10 @@
 
 function getDifferentNumber(arr){
   let map = new Map();
+
+  if(n > (Math.pow(2, 31) - 1)){
+    return undefined;
+  }
   
   arr.forEach((int, ind) => {
     console.log()
