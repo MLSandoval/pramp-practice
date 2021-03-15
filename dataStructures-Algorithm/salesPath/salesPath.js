@@ -31,6 +31,32 @@ function getCheapestCost(rootNode) {
 
 // Constructor to create a new Node
 
+let rootNode = {
+  cost: 0,
+  children: [
+    {
+      cost: 4,
+      children:[
+        {
+          cost:1,
+          children:[]
+        }
+      ]
+    },
+    {
+      cost: 1,
+      children: [
+        {},
+        {}
+      ]
+    },
+    {
+      cost:2,
+      children:[]
+    }
+  ]
+}
+
 
 function Node(cost) {
   this.cost = cost;
